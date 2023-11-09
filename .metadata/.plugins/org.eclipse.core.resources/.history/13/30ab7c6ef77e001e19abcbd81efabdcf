@@ -1,0 +1,14 @@
+package com.triveous.Service;
+
+import java.util.List;
+
+import com.triveous.Entity.Category;
+import com.triveous.Entity.Product;
+import com.triveous.Exception.CategoryException;
+
+public interface CategoryService {
+	List<Category> getAllCategories() throws CategoryException;
+    List<Product> getAllProductsByCategoryId(Long categoryId) throws CategoryException;
+
+
+}

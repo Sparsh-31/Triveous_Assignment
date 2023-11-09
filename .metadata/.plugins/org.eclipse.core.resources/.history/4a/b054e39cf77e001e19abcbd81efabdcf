@@ -1,0 +1,24 @@
+package com.triveous.ServiceImplementation;
+
+import java.util.List;
+
+import com.triveous.Entity.Category;
+import com.triveous.Entity.Product;
+import com.triveous.Exception.CategoryException;
+import com.triveous.Service.CategoryService;
+
+public class CategoryServiceImpl implements CategoryService {
+
+	@Override
+	public List<Category> getAllCategories() throws CategoryException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Product> getAllProductsByCategoryId(Long categoryId) throws CategoryException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

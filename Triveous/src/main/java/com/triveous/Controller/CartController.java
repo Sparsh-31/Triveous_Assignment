@@ -1,0 +1,50 @@
+package com.triveous.Controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.triveous.Entity.Cart;
+import com.triveous.Entity.Product;
+import com.triveous.Exception.CartException;
+import com.triveous.Service.CartService;
+@RestController
+@RequestMapping("/triveous/carts")
+public class CartController {
+
+	@Autowired
+    private CartService cartService;
+
+    @GetMapping
+    public ResponseEntity<List<Cart>> getAllCarts() throws CartException {
+        List<Cart> carts = cartService.getAllCarts();
+        return new ResponseEntity<>(carts, HttpStatus.OK);
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<?> addToCart(@RequestBody Cart cart) throws IllegalArgumentException, CartException {
+        cartService.addToCart(cart);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{cartId}/{productId}")
+    public ResponseEntity<?> deleteFromCart(@PathVariable Long cartId, @PathVariable Long productId) throws CartException {
+        cartService.deleteFromCart(cartId, productId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/items/{cartId}")
+    public ResponseEntity<List<Product>> getAllItemsInCart(@PathVariable Long cartId) throws CartException {
+        List<Product> items = cartService.getAllItemsInCart(cartId);
+        return new ResponseEntity<>(items, HttpStatus.OK);
+    }
+}

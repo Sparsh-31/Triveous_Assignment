@@ -1,0 +1,5 @@
+package com.triveous.Exception;
+
+public class GlobalExceptionsHandler {
+
+}

@@ -1,0 +1,64 @@
+package com.triveous.ServiceImplementation;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.triveous.Entity.Cart;
+import com.triveous.Entity.Product;
+import com.triveous.Exception.CartException;
+import com.triveous.Repository.CartRepository;
+import com.triveous.Service.CartService;
+
+public class CartServiceImpl implements CartService {
+	@Autowired
+    private CartRepository cartRepository;
+
+    @Override
+    public List<Cart> getAllCarts() throws CartException {
+        try {
+            return cartRepository.findAll();
+        } catch (Exception e) {
+            throw new CartException("Error retrieving carts: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void addToCart(Cart cart) throws CartException {
+        try {
+            if (cart == null) {
+                throw new IllegalArgumentException("Cart cannot be null");
+            }
+            cartRepository.save(cart);
+        } catch (Exception e) {
+            throw new CartException("Error adding to cart: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void deleteFromCart(Long cartId, Long productId) throws CartException {
+        try {
+            Cart cart = cartRepository.findById(cartId)
+                    .orElseThrow(() -> new CartException("Cart not found with id: " + cartId));
+
+            List<Product> products = cart.getProducts();
+            products.removeIf(product -> product.getId().equals(productId));
+
+            cartRepository.save(cart);
+        } catch (Exception e) {
+            throw new CartException("Error deleting from cart: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public List<Product> getAllItemsInCart(Long cartId) throws CartException {
+        try {
+            Cart cart = cartRepository.findById(cartId)
+                    .orElseThrow(() -> new CartException("Cart not found with id: " + cartId));
+
+            return cart.getProducts();
+        } catch (Exception e) {
+            throw new CartException("Error retrieving items in cart: " + e.getMessage());
+        }
+    }
+}

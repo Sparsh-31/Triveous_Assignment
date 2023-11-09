@@ -1,0 +1,29 @@
+package com.triveous.ServiceImplementation;
+
+import java.util.List;
+
+import com.triveous.Entity.Order;
+import com.triveous.Exception.OrderException;
+import com.triveous.Service.OrderService;
+
+public class OrderServiceImpl implements OrderService {
+
+	@Override
+	public List<Order> getOrdersByUserId(Long userId) throws OrderException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void placeOrder(Order order) throws OrderException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Order getOrderById(Long orderId) throws OrderException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

@@ -1,0 +1,5 @@
+package com.triveous.ServiceImplementation;
+
+public class UserServiceImpl {
+
+}

@@ -1,0 +1,53 @@
+package com.triveous.Controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.triveous.Entity.Product;
+import com.triveous.Exception.ProductException;
+import com.triveous.Service.ProductService;
+
+@RestController
+@RequestMapping("/triveous/products")
+public class ProductController {
+
+    @Autowired
+    private ProductService productService;
+
+    @GetMapping
+    public ResponseEntity<List<Product>> getAllProducts() {
+        try {
+            List<Product> products = productService.getAllProducts();
+            return new ResponseEntity<>(products, HttpStatus.OK);
+        } catch (ProductException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/category/{categoryId}")
+    public ResponseEntity<List<Product>> getProductsByCategoryId(@PathVariable Long categoryId) {
+        try {
+            List<Product> products = productService.getProductsByCategoryId(categoryId);
+            return new ResponseEntity<>(products, HttpStatus.OK);
+        } catch (ProductException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/{productId}")
+    public ResponseEntity<Product> getProductById(@PathVariable Long productId) {
+        try {
+            Product product = productService.getProductById(productId);
+            return new ResponseEntity<>(product, HttpStatus.OK);
+        } catch (ProductException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+}

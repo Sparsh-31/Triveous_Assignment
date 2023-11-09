@@ -1,0 +1,5 @@
+package com.triveous.Service;
+
+public interface UserService {
+
+}

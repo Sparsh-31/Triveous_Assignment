@@ -1,0 +1,51 @@
+package com.triveous.ServiceImplementation;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.triveous.Entity.Order;
+import com.triveous.Exception.OrderException;
+import com.triveous.Repository.OrderRepository;
+import com.triveous.Service.OrderService;
+
+@	
+public class OrderServiceImpl implements OrderService {
+
+	 	@Autowired
+	    private OrderRepository orderRepository;
+
+	    @Override
+	    public List<Order> getOrdersByUserId(Long userId) throws OrderException {
+	        try {
+	            return orderRepository.findByUserId(userId);
+	        } catch (Exception e) {
+	            throw new OrderException("Error getting orders by user ID"+ e.getMessage());
+	        }
+	    }
+
+	    @Override
+	    public void placeOrder(Order order) throws OrderException {
+	        if (order == null) {
+	            throw new IllegalArgumentException("Order cannot be null");
+	        }
+
+	        try {
+	            orderRepository.save(order);
+	        } catch (Exception e) {
+	            throw new OrderException("Error placing order"+ e.getMessage());
+	        }
+	    }
+
+	    @Override
+	    public Order getOrderById(Long orderId) throws OrderException {
+	        try {
+	            return orderRepository.findById(orderId)
+	                    .orElseThrow(() -> new OrderException("Order not found with id: " + orderId));
+	        } catch (Exception e) {
+	            throw new OrderException("Error getting order by ID"+ e.getMessage());
+	        }
+	    }
+
+
+}

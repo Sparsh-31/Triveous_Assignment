@@ -1,0 +1,8 @@
+package com.triveous.Service;
+
+public interface ProductService {
+
+	List<Product> getAllProducts() throws ProductException;
+    List<Product> getProductsByCategoryId(Long categoryId) throws ProductException;
+    Product getProductById(Long productId) throws ProductException;
+}
